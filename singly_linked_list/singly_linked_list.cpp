@@ -10,15 +10,15 @@ struct ListNode {
      ListNode(int x) : val(x), next(NULL) {}
  };
 
-ListNode* reverseList(ListNode* head) 
+ListNode* reverseListRecursion(ListNode* head) 
 {
     if (head == NULL || head->next == NULL)
     {
         return head;
     }
     
-    ListNode * newHead = reverseList(head->next);  //always the same value throughout the recursion stack.  KEY!
-    std::cout << "Newhead: " << newHead->val << std::endl;
+    ListNode * newHead = reverseListRecursion(head->next);  //always the same value throughout the recursion stack.  KEY!
+    // std::cout << "Newhead: " << newHead->val << std::endl;
     head->next->next = head;
     head->next = NULL;
     return newHead;
@@ -31,6 +31,28 @@ void printList(ListNode* head)
         std::cout << head->val << std::endl;
         head = head->next;
     }
+}
+
+
+//1->2->3->4->5->NULL
+//Iteration  prev  curr  next
+//   0        N     1      N
+//   1        1     2      2      
+ListNode * reverseListIteration(ListNode * head)
+{
+    ListNode * curr = head;
+    ListNode * prev = NULL;
+    ListNode * next = NULL;
+
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    return prev;
 }
 
 //1->2->3->4->5->NULL
@@ -47,6 +69,12 @@ int main(int argc, char * argv[])
     three.next = &four;
     four.next = &five;
 
-    ListNode * reversed = reverseList(&one);
-    printList(reversed);
+    ListNode * head = reverseListRecursion(&one);
+    std::cout << "Reverse list recursion" << std::endl;
+    printList(head);
+    head = reverseListRecursion(head);
+
+    std::cout << "Reverse list iteration" << std::endl;
+    head = reverseListIteration(head);
+    printList(head);
 }
