@@ -3,10 +3,10 @@
 #include <string>
 #include <memory>
 #include <algorithm>
+#include <sstream>
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
-
 
     return 0;
 }
